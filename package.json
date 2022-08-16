@@ -1,0 +1,12 @@
+{
+  "name": "strumenti-gm",
+  "version": "0.2.0",
+  "description": "Views per aiutare il Game Master nella gestione dell'avventura",
+  "main": "index.js",
+  "author": "zorida <dario.rizzo@gmx.com>",
+  "license": "MIT",
+  "dependencies": {
+    "bootstrap": "^5.2.0",
+    "sortablejs": "^1.15.0"
+  }
+}
