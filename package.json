@@ -5,6 +5,7 @@
   "main": "index.js",
   "author": "zorida <dario.rizzo@gmx.com>",
   "license": "MIT",
+  "keywords": ["rpg", "gdr", "game master", "initiative", "rpg combat", "game session", "virtual tabletop", "VTT"],
   "dependencies": {
     "bootstrap": "^5.2.0",
     "sortablejs": "^1.15.0"

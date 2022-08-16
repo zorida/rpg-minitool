@@ -1,0 +1,85 @@
+html {
+	font-size: 15px;
+}
+.turnTrackerPage {
+	
+	.container-fluid {
+		border-radius: 20px;
+	}
+	.turn-tracker {
+		img {
+			width: 110px;
+			height: auto;
+			text-align: center;
+		}
+		.card {
+			cursor: grab;
+		}
+	}
+	input, button {
+		margin-left: 4px;
+	}
+	.input-group {
+		width: 33%;
+	}
+	p {
+		line-height: 1;
+	}
+	.progress {
+		border: 2px solid darkslategrey;
+	}
+
+	.form-range::-moz-range-thumb {
+		width: 2rem;
+		height: 2rem;
+	}
+	.form-range::-webkit-slider-thumb {
+		width: 2rem;
+		height: 2rem;
+	}
+	/* (A) SHARED */
+	#todo-wrap, #todo-wrap * {
+		font-family: arial, sans-serif;
+	}
+	#todo-wrap input, .todo-item {
+		border: 0;
+		padding: 10px;
+		font-size: 16px;
+		margin-bottom: 10px;
+	}
+
+	/* (B) WRAPPER */
+	#todo-wrap {
+		background: slategray;
+		margin: 0 auto;
+		padding: 20px;
+	}
+
+	/* (C) HEADER */
+	#todo-wrap h1 { margin: 10px 0; }
+
+	/* (D) ROW ITEMS */
+	#todo-add, .todo-row {
+		display: flex;
+		align-items: center;
+	}
+	#todo-item, .todo-item {
+		flex-grow: 1;
+		background: #fff;
+	}
+	.todo-item.todo-ok { 
+		background: #cffff4; 
+		text-decoration: line-through;
+	}
+	.todo-item.todo-indented {
+		margin-left: 50px;
+	}
+	#todo-save, .todo-del, .todo-done, .todo-indent {
+		color: #fff;
+		cursor: pointer;
+	}
+	.todo-del { background: #ed3636; }
+	#todo-save, .todo-done { background: #2781cf; }
+	.todo-indent { background: goldenrod; }
+}
+

@@ -1,3 +1,10 @@
+
+turn.css
+turn.css.map
+saved-encounter.json
+packages/
+*.code-workspace
+encounters/*.json
 # Logs
 logs
 *.log

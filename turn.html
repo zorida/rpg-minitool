@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Turn Tracker by Zorida</title>
+	<link rel="stylesheet" href="node_modules\bootstrap\dist\css\bootstrap.min.css">
+	<link rel="stylesheet" href="turn.css">
+</head>
+<body class="turnTrackerPage bg-secondary">
+	<section class="p-3">
+		<div class="container-fluid p-3 mt-3" style="background-color: aliceblue;">
+			<div class="loaderBox mb-1 p-3">
+				<div class="row mb-2">
+					<div class="col-12 bg-white p-3 rounded">
+						<div class="row">
+							<div class="col-5">
+								<h2 class="mb-1"><small>Turn Tracker for <i>RPG</i></small></h2>
+								<p class="text-secondary">made by Zorida 2022 - v. 0.2</p>
+							</div>
+							<div class="col-7">
+								<form action="#" enctype="multipart/form-data" id="jsonForm">
+									<h5>Encounter</h5>
+									<div class="row">
+										<div class="col-md-6">
+											<input type="file" name="jsonData" id="fileInput" placeholder="File" accept=".json">
+										</div>
+										<div class="col-md-6 text-start">
+											<button type="submit" class="btn btn-sm btn-warning" id="jsonForm">Import Encounter</button>
+											<button type="button" class="btn btn-sm btn-success" id="jsonSave">Save Encounter</button>
+										</div>
+									</div>							
+								</form>
+							</div>
+						</div>
+					</div>					
+				</div>
+				<div class="row mb-3">
+					<div class="col-12 bg-light border border-info rounded p-3">
+						<h4>Turn # <span class="text-primary"><strong id="gameTurn">0</strong></span> </h4>
+						<div>
+							<label for="customRange" class="form-label">Counter:</label>
+							<input type="range" class="form-range" min="0" max="25" id="customRange">
+						</div>
+					</div>
+				</div>				
+			</div>
+			<ul class="nav nav-tabs" id="myTab" role="tablist">
+				<li class="nav-item" role="presentation">
+				  <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">Combat</button>
+				</li>
+				<li class="nav-item" role="presentation">
+				  <button class="nav-link" id="details-tab" data-bs-toggle="tab" data-bs-target="#details" type="button" role="tab" aria-controls="details" aria-selected="false">Details</button>
+				</li>
+				<li class="nav-item" role="presentation">
+				  <button class="nav-link" id="todo-tab" data-bs-toggle="tab" data-bs-target="#todoview" type="button" role="tab" aria-controls="todoview" aria-selected="false">Quests</button>
+				</li>
+			</ul>
+			<div class="tab-content" id="myTabContent">
+				<div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+					<div class="turn-tracker p-3">						
+						<div class="row bg-secondary rounded p-3">
+							<div class="col-md-6">
+								<h2 class="text-white">Fight / Mission</h2>
+								<div id="fightList" class="sortBox p-3 bg-black">
+								</div>
+							</div>
+							<div class="col-md-6">
+								<h2 class="text-white">Out of combat</h2>
+								<div id="outList" class="sortBox p-3 bg-black">
+								</div>
+							</div>				
+						</div>
+					</div>
+				</div>
+				<div class="tab-pane fade" id="details" role="tabpanel" aria-labelledby="profile-tab">
+					<div class="p-3">
+						<div class="row bg-secondary rounded p-3" id="detailsInner">
+							
+						</div>						
+					</div>
+				</div>
+				<div class="tab-pane fade" id="todoview" role="tabpanel" aria-labelledby="todo-tab">
+					<div class="p-3">
+						<div class="row bg-secondary rounded p-3" id="detailsInner">
+							<div id="todo-wrap">
+								<h3 class="text-white"><i>Quests</i></h3>
+  
+								<!-- (A) ADD NEW ITEM -->
+								<form id="todo-add">
+									<input type="text" id="todo-item" placeholder="New Item" required/>
+									<input type="submit" id="todo-save" value="&#10010;"/>
+								</form>
+  
+								<!-- (B) LIST ITEMS -->
+								<div id="todo-list"></div>
+  
+								<!-- (C) ITEM TEMPLATE -->
+								<template id="todo-template">
+									<div class="todo-row">
+										<input type="button" class="todo-del" value="&#10006;"/>
+										<div class="todo-item"></div>
+										<input type="button" class="todo-indent" title="Indent this task" value="&#8594;"/>
+										<input type="button" class="todo-done" title="Mark as done / todo" value="&#10004;"/>
+									</div>
+								</template>
+							</div>
+						</div>						
+					</div>
+				</div>
+			</div>		  
+			
+		</div>
+	</section>
+    <script src="node_modules\bootstrap\dist\js\bootstrap.min.js"></script>
+    <script src="node_modules\sortablejs\Sortable.min.js"></script>
+    <script src="turn.js"></script>
+</body>
+</html>
