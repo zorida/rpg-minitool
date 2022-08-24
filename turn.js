@@ -390,6 +390,7 @@ document.addEventListener("DOMContentLoaded", function() {
 							}
 						}
 						updateDetails();
+						updateBattlefield();
 					} else {
 						console.log('Removal operation aborted by user')
 					}			
@@ -592,6 +593,7 @@ document.addEventListener("DOMContentLoaded", function() {
 		} else {
 			elem.className = "tile m-0 bg-white";
 		}
+		elem.querySelector('.board-num').innerText = t;
 	}
 
 	function populateBattlefield(tokens = []) {

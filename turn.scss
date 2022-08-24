@@ -104,10 +104,19 @@ html {
 		display: inline-block;
 		padding: 10px;
 		border: 1px solid whitesmoke;
-		// position: relative;
-		&.arena .inner {
-			background-color: lightgray;
-			border-radius: 12px;
+		position: relative;
+		overflow: hidden;
+		.board-num {
+			position: absolute;
+			width: 45px;
+			height: 45px;
+			overflow: hidden;
+			font-size: 45px;
+			right: 0;
+			bottom: -12px;
+			color: #a0a0a090;
+			font-family: sans-serif;
+			font-weight: bold;
 		}
 	}
 	.draggable {
