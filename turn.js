@@ -84,7 +84,12 @@ document.addEventListener("DOMContentLoaded", function() {
 			// Conditions text input string must not be empty, skip all otherwise
 			if (condStr) {
 				let condArr = [];
-				let arr = condStr.split(',');
+				let arr = []
+				if (condStr.indexOf(',') !== -1) {
+					condStr.split(',');
+				} else {
+					arr.push(condStr)
+				}				
 				for (let j=0; j < arr.length; j++) {
 					let cond = arr[j].trim();
 					if (cond.indexOf(':') >= 1) {
@@ -364,40 +369,71 @@ document.addEventListener("DOMContentLoaded", function() {
 		});
 
 		let buttons = document.querySelectorAll('.card button');
-		buttons.forEach(element => {
-			element.removeEventListener("click", function(){});
-			element.addEventListener("click", function(ev) {
-				// console.log(this.classList);
-				if (this.classList.contains('turnActivate')) {
-					let toggling = this.closest('.card').classList.contains('bg-warning');
-					let items = document.getElementsByClassName('card');
-					for (let i=0; i < items.length; i++) {
-						items[i].classList.remove('bg-warning')
-					}					
-					if (!toggling) {
-						this.closest('.card').classList.add('bg-warning')
-					} 
-					else {
-						this.closest('.card').classList.remove('bg-warning')
-					};
-				} else if (this.classList.contains('removeMe')) {
-					let id = this.closest('.card').id;
-					if (true == confirm('Are you sure?')) {
-						this.closest('.card').remove();
-						for (var i = CharactersList.length - 1; i >= 0; --i) {
-							if (CharactersList[i].internalName == id) {
-								CharactersList.splice(i,1);
-							}
+		var handler = function(ev) {
+			// console.log(this.classList);
+			if (this.classList.contains('turnActivate')) {
+				let toggling = this.closest('.card').classList.contains('bg-warning');
+				let items = document.getElementsByClassName('card');
+				for (let i=0; i < items.length; i++) {
+					items[i].classList.remove('bg-warning')
+				}					
+				if (!toggling) {
+					console.log('turn on ' + this.closest('.card').id);
+					this.closest('.card').classList.add('bg-warning')
+				} else {
+					console.log('turn NOT on ' + this.closest('.card').id);
+					this.closest('.card').classList.remove('bg-warning')
+				};
+			} else if (this.classList.contains('removeMe')) {
+				let id = this.closest('.card').id;
+				if (true == confirm('Are you sure?')) {
+					this.closest('.card').remove();
+					for (var i = CharactersList.length - 1; i >= 0; --i) {
+						if (CharactersList[i].internalName == id) {
+							CharactersList.splice(i,1);
 						}
-						updateDetails();
-						updateBattlefield();
-					} else {
-						console.log('Removal operation aborted by user')
-					}			
-				}
-			})
-		});
+					}
+					updateDetails();
+					updateBattlefield();
+				} else {
+					console.log('Removal operation aborted by user')
+				}			
+			}
+		}
 	}
+
+	var turnHandler = function(ev) {
+		if (ev.target.classList && ev.target.classList.contains('turnActivate')) {
+			let toggling = ev.target.closest('.card').classList.contains('bg-warning');
+			let items = document.getElementsByClassName('card');
+			for (let i=0; i < items.length; i++) {
+				items[i].classList.remove('bg-warning')
+			}					
+			if (!toggling) {
+				console.log('turn on ' + ev.target.closest('.card').id);
+				ev.target.closest('.card').classList.add('bg-warning')
+			} else {
+				console.log('turn NOT on ' + ev.target.closest('.card').id);
+				ev.target.closest('.card').classList.remove('bg-warning')
+			};
+		} else if (ev.target.classList && ev.target.classList.contains('removeMe')) {
+			let id = ev.target.closest('.card').id;
+			if (true == confirm('Are you sure?')) {
+				ev.target.closest('.card').remove();
+				for (var i = CharactersList.length - 1; i >= 0; --i) {
+					if (CharactersList[i].internalName == id) {
+						CharactersList.splice(i,1);
+					}
+				}
+				updateDetails();
+				updateBattlefield();
+			} else {
+				console.log('Removal operation aborted by user')
+			}			
+		}
+	}
+
+	window.addEventListener('click', turnHandler);
 
 	function updateDetails() {
 		let htmlCardTemplate = `
