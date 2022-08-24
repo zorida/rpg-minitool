@@ -295,7 +295,7 @@ document.addEventListener("DOMContentLoaded", function() {
 		updateBattlefield();
 
 		let lives = document.querySelectorAll("body input[name=PV]");
-		console.log("lives", lives);
+		// console.log("lives", lives);
 		lives.forEach( element => element.dispatchEvent(new Event('input')))
 		//------------------------------------------------
 		// Update Sortables
@@ -651,8 +651,7 @@ document.addEventListener("DOMContentLoaded", function() {
 				// update position in charactersList
 				let tilePosition = (1 + (this.position.x / 100)) + gridTiles.gridSide * (this.position.y / 100);
 				let internalName = event.target.getAttribute('data-internal');
-				CharactersList.find(o => o.internalName === internalName).position = tilePosition;
-				// console.log(CharactersList);
+				if (internalName) CharactersList.find(o => o.internalName === internalName).position = tilePosition;
 			})
 			draggies.push( draggie );
 		}
