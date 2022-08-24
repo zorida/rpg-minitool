@@ -1,0 +1,97 @@
+{
+  	"characters": [
+		{
+			"name": "Hero",
+			"internalName": "hero01",
+			"isReserve": false,
+			"position": 17,
+			"gameStats": {
+				"PV": 6,
+				"PvMAX": 6,
+				"DAN": 1,
+				"ATT": 1,
+				"EVA": 1,
+				"SCU": 1,
+				"INI": 1,
+				"KAR": 1,
+				"IMP": 1
+			},
+			"conditions": "",
+			"skills": "",
+			"equip": "Arma bianca",
+			"image": "hero_1.png",
+			"outOfCombat": false
+		},
+		{
+			"name": "Hero",
+			"internalName": "hero02",
+			"isReserve": false,
+			"position": 25,
+			"gameStats": {
+				"PV": 6,
+				"PvMAX": 6,
+				"DAN": 1,
+				"ATT": 1,
+				"EVA": 1,
+				"SCU": 1,
+				"INI": 1,
+				"KAR": 1,
+				"IMP": 1
+			},
+			"conditions": "",
+			"skills": "",
+			"equip": "Arma bianca",
+			"image": "hero_2.png",
+			"outOfCombat": false
+		},
+		{
+			"name": "Hero",
+			"internalName": "hero03",
+			"isReserve": false,
+			"position": 33,
+			"gameStats": {
+				"PV": 6,
+				"PvMAX": 6,
+				"DAN": 1,
+				"ATT": 1,
+				"EVA": 1,
+				"SCU": 1,
+				"INI": 1,
+				"KAR": 1,
+				"IMP": 1
+			},
+			"conditions": "",
+			"skills": "",
+			"equip": "Arma bianca",
+			"image": "hero_3.png",
+			"outOfCombat": false
+		},
+		{
+			"name": "Hero",
+			"internalName": "hero04",
+			"isReserve": false,
+			"position": 41,
+			"gameStats": {
+				"PV": 6,
+				"PvMAX": 6,
+				"DAN": 1,
+				"ATT": 1,
+				"EVA": 1,
+				"SCU": 1,
+				"INI": 1,
+				"KAR": 1,
+				"IMP": 1
+			},
+			"conditions": "",
+			"skills": "",
+			"equip": "Arma bianca",
+			"image": "hero_4.png",
+			"outOfCombat": false
+		}		
+	],
+	"descriptor": {
+		"system": "settore-4-rpg-system",
+		"displayName": "Settore 4 RPG System - Encounter",
+		"turn": 0
+	}
+}

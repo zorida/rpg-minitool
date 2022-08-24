@@ -81,5 +81,52 @@ html {
 	.todo-del { background: #ed3636; }
 	#todo-save, .todo-done { background: #2781cf; }
 	.todo-indent { background: goldenrod; }
+	// grid
+	.fightGridWrapper {
+		background-color: gainsboro;
+		padding: 10px;
+		border-radius: 10px;
+	}
+	.fightGrid {
+		width: 801px;
+		height: auto;
+		position: relative;
+		line-height: 0;
+	}
+	.tile {
+		border-radius: 6px;
+		box-sizing: border-box;
+		width: 100px;
+		height: 100px;
+		display: inline-block;
+		padding: 10px;
+		border: 1px solid whitesmoke;
+		// position: relative;
+		&.arena .inner {
+			background-color: lightgray;
+			border-radius: 12px;
+		}
+	}
+	.draggable {
+		width: 100px;
+		height: 100px;
+		border-radius: 6px;
+		position: absolute;
+		z-index: 2;
+		top: 0;
+		left: 0;
+		cursor: grab;
+		img {
+			width: 80px;
+			height: 80px;
+			top: 10px;
+			pointer-events: none;
+			position: relative;
+		}
+	}
+	.draggable.is-pointer-down {
+		background: #0C8;
+	}
+	.draggable.is-dragging { opacity: 0.7; }
 }
 

@@ -17,7 +17,7 @@
 						<div class="row">
 							<div class="col-5">
 								<h2 class="mb-1"><small>Turn Tracker for <i>RPG</i></small></h2>
-								<p class="text-secondary">made by Zorida 2022 - v. 0.2</p>
+								<p class="text-secondary">made by Zorida 2022 - v. 0.3.0</p>
 							</div>
 							<div class="col-7">
 								<form action="#" enctype="multipart/form-data" id="jsonForm">
@@ -39,12 +39,34 @@
 				<div class="row mb-3">
 					<div class="col-12 bg-light border border-info rounded p-3">
 						<h4>Turn # <span class="text-primary"><strong id="gameTurn">0</strong></span> </h4>
+						<button type="button" class="btn btn-sm btn-primary" id="nextTurn">Turn Advance (condition tracker)</button>
 						<div>
 							<label for="customRange" class="form-label">Counter:</label>
 							<input type="range" class="form-range" min="0" max="25" id="customRange">
 						</div>
 					</div>
 				</div>				
+			</div>
+			<div class="arenaBox mb-1 p-3">
+				<div class="row mb-2">
+					<div class="col-12 bg-white p-3 rounded">
+						<div class="row">
+							<div class="col-sm-10 offset-sm-1 text-center">
+								<div class="fightGridWrapper d-flex justify-content-center">
+									<div class="fightGrid">
+
+									</div>
+								</div>
+								<template id="tile"><div class="tile"></div></template>
+								<template id="draggable">
+									<div class="draggable">
+										<img src="" alt="">
+									</div>
+								</template>							
+							</div>								
+						</div>
+					</div>					
+				</div>
 			</div>
 			<ul class="nav nav-tabs" id="myTab" role="tablist">
 				<li class="nav-item" role="presentation">
@@ -115,6 +137,7 @@
 	</section>
     <script src="node_modules\bootstrap\dist\js\bootstrap.min.js"></script>
     <script src="node_modules\sortablejs\Sortable.min.js"></script>
+    <script src="node_modules\draggabilly\dist\draggabilly.pkgd.js"></script>
     <script src="turn.js"></script>
 </body>
 </html>

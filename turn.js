@@ -2,6 +2,9 @@ document.addEventListener("DOMContentLoaded", function() {
 
 	console.log("[turn.js] ~ Custom JS ready");
 
+	const goodConditions = ["powerup", "focused", "buffed"];
+	const badConditions = ["dazed", "prone", "defeated", "shocked", "irradiated", "dead", "K.O.", "injured"];
+
 	// List of all imported characters and info
 	//------------------------------------------------------
 	let CharactersList = [];
@@ -27,6 +30,7 @@ document.addEventListener("DOMContentLoaded", function() {
 		CharactersList = arr;
 		console.log(CharactersList);
 	}
+
 	// sortable.js setup
 	//------------------------------------------------------
 	const fightList = document.querySelector("#fightList")//.innerHTML;
@@ -58,6 +62,96 @@ document.addEventListener("DOMContentLoaded", function() {
 		} else {
 			return false;
 		}		
+	}
+
+	// turn and timed conditions functions
+	//------------------------------------------------------
+	function nextTurn() {
+		let n = parseInt(document.getElementById('customRange').value);
+		if (n == 24) {
+			document.getElementById('customRange').value = 0
+		} else {
+			document.getElementById('customRange').value = (1 + n)
+		}
+		document.getElementById('gameTurn').innerText = parseInt(document.getElementById('customRange').value);
+
+		decreaseTimedConditionsBy(1);
+	}
+
+	function updateConditionsArrays() {
+		for (let i = 0; i < CharactersList.length; i++) {
+			let condStr = document.querySelector('#' + CharactersList[i].internalName + '_detail input[name=conditions]').value;
+			// Conditions text input string must not be empty, skip all otherwise
+			if (condStr) {
+				let condArr = [];
+				let arr = condStr.split(',');
+				for (let j=0; j < arr.length; j++) {
+					let cond = arr[j].trim();
+					if (cond.indexOf(':') >= 1) {
+						let elem = cond.split(':');
+						let duration = ( 0 !== parseInt(elem[1])) ? parseInt(elem[1]) : 0;
+						if (duration) {
+							condArr.push({ "name": elem[0], "duration": duration })
+						} else {
+							condArr.push({ "name": elem[0] })
+						}						
+					} else {
+						condArr.push({ "name": cond });
+					}
+				}
+				CharactersList[i].conditionsList = condArr;
+				// Update graphic badges
+				let badgeTmpl = `<span class="badge mx-1 {{class}}">{{condition}} {{duration}}</span>`; // bg-secondary
+				let conditionHtml = document.querySelector('#' + CharactersList[i].internalName + " .conditions");
+				conditionHtml.innerHTML = ""; // reset conditions layout
+				for (let cond of condArr) {
+					if ("" != cond.name.trim()) {
+						let condLcased = cond.name.toLowerCase();
+						let classname = "bg-light text-dark";
+						let arrow = `&harr;`;
+						if (badConditions.indexOf(condLcased) >= 0) {
+							classname = "bg-danger";
+							arrow = `&darr;`
+						} else if (goodConditions.indexOf(condLcased) >= 0) {
+							classname = "bg-info";
+							arrow = `&uarr;`
+						}
+						let badge = badgeTmpl.replace('{{class}}', classname).replace('{{condition}}', condLcased.toUpperCase() + " " + arrow)
+							.replace('{{duration}}', cond.duration ? ": <strong>" + cond.duration + "</strong>" : "");
+						conditionHtml.innerHTML += badge;
+					}					
+				}
+			}
+			
+
+		}
+	}
+
+	function decreaseTimedConditionsBy(turns = 1) {
+		updateConditionsArrays();
+		for (let i = 0; i < CharactersList.length; i++) {
+			let str = "";
+			if (CharactersList[i].conditionsList && CharactersList[i].conditionsList.length) {
+				for (let j=0; j < CharactersList[i].conditionsList.length; j++) {
+					let c = CharactersList[i].conditionsList[j];
+					let duration = 0;
+					if (c.duration) {
+						duration = c.duration - turns;
+					} else {
+						str += c.name;
+					}
+					if (duration >= 1) {
+						str += c.name;
+						str += (":" + duration);
+					} 
+					if ( j < (CharactersList[i].conditionsList.length - 1) && c.name)	{
+						str += ',';
+					}			
+				}
+			}
+			document.querySelector("#"+ CharactersList[i].internalName + "_detail input[name=conditions]").value = str;
+			updateConditionsArrays();			
+		}
 	}
 
 	/**
@@ -93,7 +187,7 @@ document.addEventListener("DOMContentLoaded", function() {
 		const text = JSON.stringify({
 			"characters": CharactersList,
 			"descriptor": Descriptor
-		}, null, 2);
+		}, null, 4);
 		element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
 		element.setAttribute('target', '_blank');
 		element.setAttribute('download', filename);
@@ -141,6 +235,7 @@ document.addEventListener("DOMContentLoaded", function() {
 				</div>
 			</div>
 			<div class="col-md-12 text-center">
+				<div class="d-inline-block"><h6>Conditions: &nbsp;</h6></div><h6 class="d-inline-block conditions"></h6>
 				<p class="text-secondary mb-1"><small>(data creazione: {{date}})</small></p>
 			</div>
 		</div>`;
@@ -197,6 +292,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
 		updateLiveControls();
 		updateDetails();
+		updateBattlefield();
 
 		let lives = document.querySelectorAll("body input[name=PV]");
 		console.log("lives", lives);
@@ -228,6 +324,10 @@ document.addEventListener("DOMContentLoaded", function() {
 	});
 	document.getElementById('jsonSave').addEventListener("click", function(event) {
 		download('saved-encounter.json');
+	});
+	
+	document.getElementById('nextTurn').addEventListener("click", function(event) {
+		nextTurn();
 	});
 	document.getElementById('customRange').addEventListener("input", function(event) {
 		document.getElementById('gameTurn').innerText = this.value;
@@ -331,6 +431,7 @@ document.addEventListener("DOMContentLoaded", function() {
 			let el = document.createElement('div');
 			el.className = 'col-md-6 characterCard card mb-3';
 			el.id = c.internalName + '_detail';
+			el.setAttribute( "data-internalname", c.internalName);
 			el.innerHTML = htmlCardTemplate.replaceAll('{{characterName}}',c.name)
 				.replaceAll('{{internalName}}', c.internalName)
 				.replaceAll('{{conditions}}', (c.conditions ? c.conditions : ''))
@@ -339,6 +440,16 @@ document.addEventListener("DOMContentLoaded", function() {
 				.replaceAll('{{image}}', (c.image ? c.image : '_generic.png'));
 			listContainer.appendChild(el);
 		}
+		// setup condition fields listeners
+		let conditionsFields = document.querySelectorAll('input[name=conditions]');
+		conditionsFields.forEach((element) => {
+
+			element.removeEventListener("blur", function(){});
+			element.addEventListener("blur", function(ev) {
+				updateConditionsArrays();
+			});
+		});
+		updateConditionsArrays();
 	}
 
 	var todo = {
@@ -421,4 +532,139 @@ document.addEventListener("DOMContentLoaded", function() {
 	};
 
 	todo.init();
+
+	// Drag and Snap Fight Grid (.fightGrid)
+	//------------------------------------------------------------------------
+	const gridTiles = {
+		count: 64,
+		gridSide: 8,
+		tileSidePixel: 100,
+		outSideCombat: [1,2,3,4,5,6,7,8,57,58,59,60,61,62,63,64],
+		sides: [9,10,11,12,13,14,15,16,49,50,51,52,53,54,55,56],
+		extraElements: [
+			{
+				"element": "crate",
+				"position": 1 
+			},
+			{
+				"element": "crate",
+				"position": 2 
+			},
+			{
+				"element": "crate",
+				"position": 3 
+			},
+			{
+				"element": "crate",
+				"position": 4 
+			},
+			{
+				"element": "barrier",
+				"position": 5 
+			},
+			{
+				"element": "barrier",
+				"position": 6 
+			},
+			{
+				"element": "barrier",
+				"position": 7 
+			},
+			{
+				"element": "barrier",
+				"position": 8 
+			}
+		]
+	}
+	let tile = document.querySelector('template#tile').content;
+	let draggable = document.querySelector('template#draggable').content;
+	for (let t = 1; t <= gridTiles.count; t++) {
+		document.querySelector('.fightGrid').appendChild(document.importNode(tile, true));
+		let elem = document.querySelector('.fightGrid .tile:last-child');
+		let column = t % gridTiles.gridSide;
+		let row = Math.ceil(t / gridTiles.gridSide);
+		if ( gridTiles.outSideCombat.indexOf(t) > -1) {
+			elem.className = "tile m-0 bg-secondary";
+		} else if ( row == 2 || row == 7 ) {
+			elem.className = "tile m-0 bg-info";
+		} else if ([2,4,5,7].indexOf(column) > -1) {
+			elem.className = "tile m-0 bg-warning";
+		} else {
+			elem.className = "tile m-0 bg-white";
+		}
+	}
+
+	function populateBattlefield(tokens = []) {
+		let occupiedExtraTiles = 0;
+		for (let t = 0; t < tokens.length; t++) {
+			let item = tokens[t];
+			// Place each token in predefined position
+			// or outside combat with a round-robin system based on esteemed occupied tiles
+			let position = item.position ? item.position : gridTiles.count - occupiedExtraTiles;
+			if (!item.position) {
+				occupiedExtraTiles ++;
+				if (occupiedExtraTiles > gridTiles.gridSide) occupiedExtraTiles = 0;
+			}
+			document.querySelector('.fightGrid').appendChild(
+				document.importNode(draggable, true));
+			let el = document.querySelector('.fightGrid .draggable:last-child');
+			let imgSrc = item.element ? item.element +".png" : item.image;
+			el.querySelector('img').setAttribute('src', "images/" + imgSrc );
+			el.className = 'draggable';
+			if (item.internalName) {el.setAttribute('data-internal', item.internalName)};
+			let top = ((Math.ceil(item.position / gridTiles.gridSide) - 1) * gridTiles.tileSidePixel) + 'px';
+			let left = (((item.position - 1) % gridTiles.gridSide) * gridTiles.tileSidePixel) + 'px';
+			el.style.top = top;
+			el.style.left = left;
+		}
+	}
+
+	// array of Draggabillies
+	var draggies = [];
+	let draggableElems = [];
+
+	function cleanBattlefield() {
+		const boxes = document.querySelectorAll('.fightGrid .draggable');
+		boxes.forEach(box => {
+		  box.remove();
+		});
+
+		draggies = [];
+	}
+	function updateBattlefield() {
+		cleanBattlefield();
+		populateBattlefield(gridTiles.extraElements);
+		populateBattlefield(CharactersList);
+		initDraggies();
+	}
+	function initDraggies() {
+		draggableElems = document.querySelectorAll('.fightGrid .draggable');
+
+		for ( var i=0; i < draggableElems.length; i++ ) {
+			var draggableElem = draggableElems[i];
+			var draggie = new Draggabilly( draggableElem, {
+				grid: [ 100, 100 ],
+				containment: '.fightGrid'
+			});
+			draggie.on( 'dragEnd', function( event, pointer ) {
+				console.log('dragged to ', this.position);
+				// update position in charactersList
+				let tilePosition = (1 + (this.position.x / 100)) + gridTiles.gridSide * (this.position.y / 100);
+				let internalName = event.target.getAttribute('data-internal');
+				CharactersList.find(o => o.internalName === internalName).position = tilePosition;
+				// console.log(CharactersList);
+			})
+			draggies.push( draggie );
+		}
+	}
+
+	// Init Battlefield
+	//-----------------------------------------------
+	populateBattlefield(gridTiles.extraElements);
+	
+	// get all draggie elements
+	draggableElems = document.querySelectorAll('.fightGrid .draggable');
+	
+	initDraggies();
+	
 });

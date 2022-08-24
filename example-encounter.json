@@ -1,67 +1,43 @@
 {
-  "characters": [
-    {
-      "name": "Jack",
-      "internalName": "hero01",
-      "isReserve": false,
-      "gameStats": {
-        "PV": 10,
-        "PvMAX": 12,
-        "DAN": 2,
-        "ATT": 1,
-        "EVA": 2,
-        "SCU": 1,
-        "INI": 2,
-        "KAR": 2,
-        "IMP": 1
-      },
-      "conditions": "Consapevolezza critica",
-      "skills": "Attacco di opportunità,Fuoco Mirato",
-      "equip": "Pistola ad Energia",
-      "image": "hero_1.png",
-      "outOfCombat": false
-    },
-    {
-      "name": "Worm",
-      "internalName": "enemy01",
-      "outOfCombat": false,
-      "isReserve": true,
-      "gameStats": {
-        "PV": 8,
-        "PvMAX": 8,
-        "DAN": 3,
-        "ATT": 0,
-        "EVA": 1,
-        "SCU": 0,
-        "INI": 1,
-        "KAR": 0,
-        "IMP": 0
-      },
-      "image": "worm.png",
-      "conditions": "Blah"
-    },
-    {
-      "name": "Worm",
-      "internalName": "enemy02",
-      "isReserve": false,
-      "gameStats": {
-        "PV": 8,
-        "PvMAX": 8,
-        "DAN": 3,
-        "ATT": 0,
-        "EVA": 1,
-        "SCU": 0,
-        "INI": 1,
-        "KAR": 0,
-        "IMP": 0
-      },
-      "image": "worm.png",
-      "outOfCombat": true
-    }
-  ],
-  "descriptor": {
-    "system": "settore-4-rpg-system",
-    "displayName": "Settore 4 RPG System - Encounter",
-    "turn": 12
-  }
+	"characters": [
+		{
+			"name": "Worm",
+			"internalName": "enemy01",
+			"outOfCombat": false,
+			"isReserve": true,
+			"position": 24,
+			"gameStats": {
+				"PV": 8,
+				"PvMAX": 8,
+				"DAN": 3,
+				"ATT": 0,
+				"EVA": 1,
+				"SCU": 0,
+				"INI": 1,
+				"KAR": 0,
+				"IMP": 0
+			},
+			"image": "worm.png",
+			"conditions": "Aslept"
+		},
+		{
+			"name": "Worm",
+			"internalName": "enemy02",
+			"isReserve": false,
+			"outOfCombat": true,
+			"position": 64,
+			"gameStats": {
+				"PV": 8,
+				"PvMAX": 8,
+				"DAN": 3,
+				"ATT": 0,
+				"EVA": 1,
+				"SCU": 0,
+				"INI": 1,
+				"KAR": 0,
+				"IMP": 0
+			},
+			"image": "worm.png"
+		}
+	]
 }

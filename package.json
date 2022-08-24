@@ -1,13 +1,23 @@
 {
   "name": "strumenti-gm",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Views per aiutare il Game Master nella gestione dell'avventura",
   "main": "index.js",
   "author": "zorida <dario.rizzo@gmx.com>",
   "license": "MIT",
-  "keywords": ["rpg", "gdr", "game master", "initiative", "rpg combat", "game session", "virtual tabletop", "VTT"],
+  "keywords": [
+    "rpg",
+    "gdr",
+    "game master",
+    "initiative",
+    "rpg combat",
+    "game session",
+    "virtual tabletop",
+    "VTT"
+  ],
   "dependencies": {
     "bootstrap": "^5.2.0",
+    "draggabilly": "^3.0.0",
     "sortablejs": "^1.15.0"
   }
 }
