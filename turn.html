@@ -21,6 +21,7 @@
 							<div class="col-4">
 								<h2 class="mb-1"><small>Turn Tracker for <i>RPG</i></small></h2>
 								<p class="text-secondary">made by Zorida 2022 - v. 0.3.0</p>
+								<p class="text-secondary">Credits to <a href="http://codingartistweb.com/2021/04/roll-the-dice-javascript-dice-roll/">Coding Artists</a>, and more</p>
 							</div>
 							<div class="col-6">
 								<form action="#" enctype="multipart/form-data" id="jsonForm">
@@ -41,12 +42,26 @@
 				</div>
 				<div class="row mb-3">
 					<div class="col-12 bg-light border border-info rounded p-3">
-						<h4>Turn # <span class="text-primary"><strong id="gameTurn">0</strong></span> </h4>
-						<button type="button" class="btn btn-sm btn-primary" id="nextTurn">Turn Advance (condition tracker)</button>
-						<div>
-							<label for="customRange" class="form-label">Counter:</label>
-							<input type="range" class="form-range" min="0" max="25" id="customRange">
-						</div>
+						<div class="row">
+							<div class="col-md-6 turnBox">
+								<h4>Turn # <span class="text-primary"><strong id="gameTurn">0</strong></span></h4>
+								<button type="button" class="btn btn-sm btn-primary" id="nextTurn">Turn Advance (condition tracker)</button>
+								<div class="mt-4">
+									<label for="customRange" class="form-label">Counter:</label>
+									<input type="range" class="form-range" min="0" max="25" id="customRange">
+								</div>
+							</div>
+							<div class="col-md-6 diceBox">
+								<h4>Dice Roll ---> <span class="text-primary"><strong id="diceResult">0</strong></span></h4>
+								<button type="button" class="btn btn-sm btn-primary me-2 diceroll" id="roll1d6">1d6 roll</button>
+								<button type="button" class="btn btn-sm btn-success me-2 diceroll" id="roll1d6_adv" title="Keep the best out of two rolls">1d6 with Advantage</button>
+								<button type="button" class="btn btn-sm btn-warning me-2 diceroll" id="roll1d6_dis" title="Keep the worst out of two rolls">1d6 with Disadvantage</button>
+								<div class="dice-wrapper my-2">
+									<img id="die-1">
+									<img id="die-2">
+								</div>
+							</div>
+						</div>						
 					</div>
 				</div>				
 			</div>

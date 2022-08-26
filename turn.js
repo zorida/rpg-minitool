@@ -402,6 +402,8 @@ document.addEventListener("DOMContentLoaded", function() {
 		}
 	}
 
+	// turn reminder switch and character remover buttons handler
+	//------------------------------------------------------------------
 	var turnHandler = function(ev) {
 		if (ev.target.classList && ev.target.classList.contains('turnActivate')) {
 			let toggling = ev.target.closest('.card').classList.contains('bg-warning');
@@ -434,6 +436,74 @@ document.addEventListener("DOMContentLoaded", function() {
 	}
 
 	window.addEventListener('click', turnHandler);
+
+	// dice roll handler
+	//-----------------------------------------------------
+	let images = ["images/dice-01.svg",
+	"images/dice-02.svg",
+	"images/dice-03.svg",
+	"images/dice-04.svg",
+	"images/dice-05.svg",
+	"images/dice-06.svg"];
+	document.querySelector("#die-1").setAttribute("src", images[1]);
+	document.querySelector("#die-2").setAttribute("src", images[2]);
+
+	function roll(id = 'roll1d6'){
+
+		
+		let dice = [];
+		let result = 0;
+		let diceNumber = id == 'roll1d6' ? 1 : 2;
+		if (diceNumber == 1) {
+			dice.push(document.querySelector('.dice-wrapper img#die-1'));
+		} else {
+			dice = document.querySelectorAll('.dice-wrapper img');
+		}
+		dice.forEach(function(die){
+			die.classList.add("shake");
+		});
+		setTimeout(function(){
+			let results = [];
+			switch(id){
+				case "roll1d6":
+					result = Math.ceil(6 * Math.random());
+					dice[0].classList.remove("shake");
+					dice[0].setAttribute("src", images[result - 1]);
+					document.querySelector('#diceResult').innerText = result;
+					break;
+				case "roll1d6_adv":
+					results = [];
+					dice.forEach(function(die){
+						die.classList.remove("shake");
+						let dieValue = Math.ceil(Math.random()*6);
+						results.push(dieValue)
+						die.setAttribute("src", images[dieValue - 1]);
+					});
+					let best = Math.max(results[0], results[1]);
+					document.querySelector('#diceResult').innerHTML = "<span>" + best + " <span class='text-secondary'>(" + results[0] + " | " + results[1] + ")</span></span>";
+					break;
+				case "roll1d6_dis":
+					results = [];
+					dice.forEach(function(die){
+						die.classList.remove("shake");
+						let dieValue = Math.ceil(Math.random()*6);
+						results.push(dieValue)
+						die.setAttribute("src", images[dieValue - 1]);
+					});
+					let worst = Math.min(results[0], results[1]);
+					document.querySelector('#diceResult').innerHTML = "<span>" + worst + " <span class='text-secondary'>(" + results[0] + " | " + results[1] + ")</span></span>";
+					break;
+			}	
+		}, 1000
+		);
+	}
+	document.querySelector('.diceBox').addEventListener('click', function (ev) {	
+		const button = ev.target;	
+		let id = button.id;
+		if (button.classList.contains('diceroll')) {			
+			roll(id)			
+		}
+	});
 
 	function updateDetails() {
 		let htmlCardTemplate = `
